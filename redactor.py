@@ -11,12 +11,13 @@ uv pip install package_name
 
 """
 
-import fitz
+import pymupdf as fitz
 import re
 from pathlib import Path
 import sys 
 import spacy
-import fitz  # PyMuPDF
+import tkinter as tk
+from tkinter import filedialog
 
 
 ADDRESS_PATTERN = re.compile(r'\d+\s+\b(?:[A-Za-z]+\s){1,3}(Street|St|Avenue|Ave|Road|Rd|Lane|Ln|Boulevard|Blvd|Drive|Dr|Court|Ct)\b')
