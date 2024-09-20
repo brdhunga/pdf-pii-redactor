@@ -202,13 +202,49 @@ def recreate_pdf_from_existing(pdf_path, output_pdf_path):
 
 
 
-
 if __name__ == '__main__':
-    input_pdf_file = sys.argv[1]
-    output_pdf_file = sys.argv[1].replace(".pdf", "-recreate.pdf")
-    print(output_pdf_file)
-    recreate_pdf_from_existing(input_pdf_file, output_pdf_file)
-    print("Done rec and produced")
+    try:
+        root = tk.Tk()
+        root.title("PDF File Redactor")
+
+
+        message_label = tk.Label(root, text="Please upload the pdf file below to redact.")
+        message_label.pack(pady=10)
+
+
+        def upload_file():
+            file_path = filedialog.askopenfilename(title="Select a File")
+            if file_path:
+                input_pdf_file = file_path
+                message_label.config(text=f"Redaction started")
+                output_pdf_file = input_pdf_file.replace(".pdf", "-redacted.pdf")
+                recreate_pdf_from_existing(input_pdf_file, output_pdf_file)
+                message_label.config(text=f"Redacted file saved to {output_pdf_file}")
+                print(f"Done rec and produced")
+
+
+        root.geometry("700x250")
+
+
+        upload_button = tk.Button(root, text="Upload File", command=upload_file)
+        upload_button.pack(pady=10)
+
+
+        def close_window():
+            root.destroy()
+
+        close_button = tk.Button(root, text="Close", command=close_window)
+        close_button.pack(pady=10)
+
+        root.mainloop()
+
+    except Exception as e:
+        input_pdf_file = sys.argv[1]
+        output_pdf_file = sys.argv[1].replace(".pdf", "-recreate.pdf")
+        print(output_pdf_file)
+        recreate_pdf_from_existing(input_pdf_file, output_pdf_file)
+        print(f"Done and produced: {output_pdf_file}")
+
 
 # Exception: need font file or buffer
 
