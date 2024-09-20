@@ -52,7 +52,16 @@ def mask_pii(text):
     return text
 
 
-nlp = spacy.load("en_core_web_md")
+try:
+    # Attempt to load the model
+    nlp = spacy.load("en_core_web_md")
+except OSError:
+    # If the model is not found, download it
+    print("Model 'en_core_web_md' not found. Downloading now...")
+    spacy.cli.download("en_core_web_md")
+    nlp = spacy.load("en_core_web_md")
+
+# nlp = spacy.load("en_core_web_md")
 
 # python -m spacy download en_core_web_md
 
