@@ -55,7 +55,7 @@ def mask_pii(text):
 try:
     # Attempt to load the model
     nlp = spacy.load("en_core_web_md")
-except OSError:
+except (OSError, ModuleNotFoundError):
     # If the model is not found, download it
     print("Model 'en_core_web_md' not found. Downloading now...")
     spacy.cli.download("en_core_web_md")
@@ -101,9 +101,7 @@ def replace_names_and_addresses(text: str) -> str:
 
     # Apply regex-based address redaction on the modified text
     redacted_text = re.sub(ADDRESS_PATTERN, lambda match: 'x' * len(match.group()), modified_text)
-    if not found:
-        return mask_pii(text)
-    return mask_pii(redacted_text)
+    return redacted_text
 
 
 
